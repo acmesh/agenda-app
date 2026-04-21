@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark">A</div>
+        <span class="brand-title">Agenda</span>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-label">Categories</div>
+        <ul class="category-list" id="categoryList">
+          <li class="category-item active" data-category="all">
+            <span class="cat-icon">◈</span>
+            <span class="cat-name">All Tasks</span>
+            <span class="cat-count" id="cnt-all">0</span>
+          </li>
+          <li class="category-item" data-category="Calls">
+            <span class="cat-icon">📞</span>
+            <span class="cat-name">Calls</span>
+            <span class="cat-count" id="cnt-Calls">0</span>
+          </li>
+          <li class="category-item" data-category="Mails">
+            <span class="cat-icon">✉️</span>
+            <span class="cat-name">Mails</span>
+            <span class="cat-count" id="cnt-Mails">0</span>
+          </li>
+          <li class="category-item" data-category="Answers">
+            <span class="cat-icon">💬</span>
+            <span class="cat-name">Answers</span>
+            <span class="cat-count" id="cnt-Answers">0</span>
+          </li>
+          <li class="category-item" data-category="Articles">
+            <span class="cat-icon">📄</span>
+            <span class="cat-name">Articles</span>
+            <span class="cat-count" id="cnt-Articles">0</span>
+          </li>
+          <li class="category-item" data-category="Posts">
+            <span class="cat-icon">📝</span>
+            <span class="cat-name">Posts</span>
+            <span class="cat-count" id="cnt-Posts">0</span>
+          </li>
+          <li class="category-item" data-category="Documents">
+            <span class="cat-icon">📁</span>
+            <span class="cat-name">Documents</span>
+            <span class="cat-count" id="cnt-Documents">0</span>
+          </li>
+          <li class="category-item" data-category="Projects">
+            <span class="cat-icon">🗂️</span>
+            <span class="cat-name">Projects</span>
+            <span class="cat-count" id="cnt-Projects">0</span>
+          </li>
+          <li class="category-item" data-category="Applications">
+            <span class="cat-icon">💻</span>
+            <span class="cat-name">Applications</span>
+            <span class="cat-count" id="cnt-Applications">0</span>
+          </li>
+          <li class="category-item" data-category="Home Stuff">
+            <span class="cat-icon">🏠</span>
+            <span class="cat-name">Home Stuff</span>
+            <span class="cat-count" id="cnt-Home Stuff">0</span>
+          </li>
+          <li class="category-item" data-category="Todo">
+            <span class="cat-icon">✅</span>
+            <span class="cat-name">Todo</span>
+            <span class="cat-count" id="cnt-Todo">0</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <div class="sidebar-section">
+        <div class="section-label">Google Calendar</div>
+        <div class="gcal-block" id="gcalBlock">
+          <div class="gcal-status" id="gcalStatus">
+            <span class="status-dot" id="gcalDot"></span>
+            <span id="gcalLabel">Checking…</span>
+          </div>
+          <button class="gcal-action-btn" id="gcalBtn" style="display:none"></button>
+        </div>
+        <button class="add-reminder-btn" id="sidebarReminderBtn">
+          <span class="btn-icon">🔔</span>
+          New Reminder
+        </button>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="legend">
+          <div class="legend-item"><span class="dot dot-none"></span>Not assigned</div>
+          <div class="legend-item"><span class="dot dot-progress"></span>In Progress</div>
+          <div class="legend-item"><span class="dot dot-urgent"></span>Urgent</div>
+          <div class="legend-item"><span class="dot dot-done"></span>Done</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main ── -->
+    <main class="main">
+      <header class="main-header">
+        <div class="header-left">
+          <h2 id="headerTitle">All Tasks</h2>
+          <span class="header-badge" id="headerBadge">0</span>
+        </div>
+        <div class="header-right">
+          <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 20 20" fill="none">
+              <circle cx="8.5" cy="8.5" r="5.75" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M13 13L17 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search tasks…" autocomplete="off">
+          </div>
+          <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="active">Active</button>
+            <button class="filter-tab" data-filter="done">Done</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="add-task-bar">
+        <button class="add-plus-btn" id="addPlusBtn" title="Add task">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+            <path d="M10 4a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V5a1 1 0 011-1z"/>
+          </svg>
+        </button>
+        <input type="text" id="newTaskInput" placeholder="Add a new task… press Enter or click +" autocomplete="off">
+        <select id="newTaskCategory" class="category-select">
+          <option value="Todo">Todo</option>
+          <option value="Calls">Calls</option>
+          <option value="Mails">Mails</option>
+          <option value="Answers">Answers</option>
+          <option value="Articles">Articles</option>
+          <option value="Posts">Posts</option>
+          <option value="Documents">Documents</option>
+          <option value="Projects">Projects</option>
+          <option value="Applications">Applications</option>
+          <option value="Home Stuff">Home Stuff</option>
+        </select>
+      </div>
+
+      <div class="task-list" id="taskList"></div>
+
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">📋</div>
+        <div class="empty-title">No tasks here</div>
+        <div class="empty-sub">Add your first task above</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── Reminder Modal ── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="reminderModal" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+      <div class="modal-header">
+        <h3 id="modalHeading">Add to Google Calendar</h3>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+            <path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="modalTitle">Title</label>
+          <input type="text" id="modalTitle" placeholder="Event or reminder title">
+        </div>
+        <div class="form-group">
+          <label for="modalDesc">Description <span class="optional">optional</span></label>
+          <textarea id="modalDesc" rows="2" placeholder="Additional notes…"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="modalDatetime">Date &amp; Time</label>
+            <input type="datetime-local" id="modalDatetime">
+          </div>
+          <div class="form-group form-group-sm">
+            <label for="modalDuration">Duration</label>
+            <select id="modalDuration">
+              <option value="15">15 min</option>
+              <option value="30" selected>30 min</option>
+              <option value="45">45 min</option>
+              <option value="60">1 hour</option>
+              <option value="90">1.5 hours</option>
+              <option value="120">2 hours</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Notification</label>
+          <div class="notif-options">
+            <label class="notif-option">
+              <input type="radio" name="notifType" value="popup" checked>
+              <span class="notif-label">
+                <span class="notif-icon">🔔</span>
+                Calendar Notice
+              </span>
+            </label>
+            <label class="notif-option">
+              <input type="radio" name="notifType" value="email">
+              <span class="notif-label">
+                <span class="notif-icon">✉️</span>
+                Email
+              </span>
+            </label>
+            <label class="notif-option">
+              <input type="radio" name="notifType" value="both">
+              <span class="notif-label">
+                <span class="notif-icon">📢</span>
+                Both
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="modalRemindMins">Remind me before</label>
+          <select id="modalRemindMins">
+            <option value="5">5 minutes</option>
+            <option value="10">10 minutes</option>
+            <option value="15">15 minutes</option>
+            <option value="30" selected>30 minutes</option>
+            <option value="60">1 hour</option>
+            <option value="120">2 hours</option>
+            <option value="1440">1 day</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="modalCancelBtn">Cancel</button>
+        <button class="btn-primary" id="modalSubmitBtn">
+          <span class="btn-icon">📅</span>
+          Add to Calendar
+        </button>
+      </div>
+      <!-- Shown when not authenticated -->
+      <div class="modal-auth-wall" id="modalAuthWall" style="display:none">
+        <div class="auth-wall-icon">📅</div>
+        <p class="auth-wall-title">Connect Google Calendar</p>
+        <p class="auth-wall-sub" id="authWallMessage">Sign in to add reminders and events to your calendar.</p>
+        <a class="btn-primary" href="/auth/google" id="authWallBtn">Connect Google Calendar</a>
+        <button class="btn-ghost" id="authWallCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Toast ── -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
