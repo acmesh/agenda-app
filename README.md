@@ -66,3 +66,36 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## Data
 
 Tasks are stored locally in `tasks.json`. Google OAuth tokens are saved to `.tokens.json` (gitignored).
+
+## `agenda` helper script
+
+A convenience script at `~/bin/agenda` manages the server as a background process.
+
+### Setup
+
+Make sure `~/bin` is in your `PATH` (add this to `~/.bashrc` or `~/.zshrc` if needed):
+
+```bash
+export PATH="$HOME/bin:$PATH"
+```
+
+Make the script executable:
+
+```bash
+chmod +x ~/bin/agenda
+```
+
+The script hardcodes the app directory to `/home/acme/Cubbit/Claude/APP/agenda-app` and the port to `3000`. If you move the project or change the port, update `APP_DIR` and `PORT` at the top of `~/bin/agenda`.
+
+### Usage
+
+```bash
+agenda           # start the server (default)
+agenda start     # start the server
+agenda stop      # stop the server
+agenda restart   # stop then start
+agenda status    # show whether the server is running
+agenda log       # tail the live log
+```
+
+The server runs in the background. Output is written to `.agenda.log` inside the project directory. A `.agenda.pid` file tracks the process ID (both are gitignored).
